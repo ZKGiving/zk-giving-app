@@ -69,7 +69,7 @@
   integrity sha512-CrOj6p4SHiawlu9Rcd3iuRdGg735KOT+9MEH1MkadTmznhpeuk82bE0F40zJluSODM84neoex1P2LNsBKyOaDg==
   dependencies:
     "@aztec/barretenberg" "2.1.50"
-    "@aztec/bridge-clients" "2.1.50"
+    "@aztec/bridge-clients" "0.1.73"
     "@ethersproject/abstract-provider" "5.5.1"
     "@ethersproject/contracts" "5.5.0"
     "@ethersproject/experimental" "5.5.0"
@@ -84,10 +84,10 @@
     ethers "5.5.1"
     sha3 "^2.1.4"
 
-"@aztec/bridge-clients@2.1.50":
-  version "0.1.72"
-  resolved "https://registry.yarnpkg.com/@aztec/bridge-clients/-/bridge-clients-0.1.72.tgz#b8f1adb238a3932f00395eeea16d134cdcbd31fd"
-  integrity sha512-ohyPWOdjAKUU/01YNAI6ALJNM1CNs/7Fa08IjzAdix2q+AoO8uMVOuT95UKEmrb7V+2KElLwGml1Iqi5+yOGJg==
+"@aztec/bridge-clients@0.1.73":
+  version "0.1.73"
+  resolved "https://registry.yarnpkg.com/@aztec/bridge-clients/-/bridge-clients-0.1.73.tgz#2adf1f82ae61ebdac73d92a2c9c129d57cc43ab2"
+  integrity sha512-3AwoEZVISAmHae4eCE3cMbCKYmi05uQTN84Yqng++m3bVBTaRlAqnI3wwsZwdPGcL3UGU77Efp7MIS4mEWv/Mg==
   dependencies:
     "@aztec/barretenberg" "2.1.45"
     "@ethersproject/providers" "^5.7.1"
