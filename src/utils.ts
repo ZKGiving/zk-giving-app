@@ -163,7 +163,7 @@ export async function aztecConnect(
     outputAssetIdA,
     inputAssetIdB,
     outputAssetIdB,
-    auxData,
+    BigInt(auxData),
   );
 
   // Initiate controller parameters
