@@ -2,8 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App.js";
+import Organization from "./Organization.js";
 import reportWebVitals from "./reportWebVitals.js";
 import { BridgeDataProvider } from "./bridge-data.js";
+import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "organizations/:ein",
+    element: <Organization />
+  }
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,7 +24,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BridgeDataProvider>
-      <App />
+      <RouterProvider router={router} />
     </BridgeDataProvider>
   </React.StrictMode>
 );
