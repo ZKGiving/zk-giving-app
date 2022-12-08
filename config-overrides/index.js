@@ -2,7 +2,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ResolveTypeScriptPlugin = require('resolve-typescript-plugin');
 const path = require('path');
 const webpack = require('webpack');
-const { override } = require("customize-cra");
+const { override, addPostcssPlugins } = require("customize-cra");
+
 
 function stuff(config, env) {
   config.resolve = {
@@ -58,4 +59,6 @@ const addIgnoreSourcemapsloaderWarnings = (config) => {
   return config;
 };
 
-module.exports = override(stuff, addIgnoreSourcemapsloaderWarnings);
+
+
+module.exports = override(stuff, addIgnoreSourcemapsloaderWarnings, addPostcssPlugins([require('tailwindcss')]));
