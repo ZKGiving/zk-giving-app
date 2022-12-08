@@ -1,4 +1,4 @@
-import tailwindConfig from "./tailwind.config.js";
+import tailwindConfig from "./tailwind.config.mjs";
 import tailwindcss from "tailwindcss"
 import autoprefixer from "autoprefixer";
 
