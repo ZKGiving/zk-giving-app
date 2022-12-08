@@ -4,15 +4,18 @@ import LoginButton from "./components/LoginButton.js";
 import DonateButton from "./components/DonateButton.js";
 // import ModalDonate from "../../components/ModalDonate"
 import DonateForm from "./components/DonateForm/index.js";
+import { useParams } from "react-router-dom";
 
 export default function Organization(props: any) {
   const [claimedAddress, setClaimedAddress] = useState();
   const [userAddress, setUserAddress] = useState();
   const [connection, setConnection] = useState();
-  const { orgData } = props;
+  const  params  = useParams();
 
   async function callEIN() {
-    const response = await fetch("/api/ein-subgraph", {
+    console.log(params)
+
+    const response = await fetch("http://localhost:3001/api/ein-subgraph", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, *cors, same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -22,10 +25,12 @@ export default function Organization(props: any) {
       },
       redirect: "follow", // manual, *follow, error
       referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(orgData.ein), // body data type must match "Content-Type" header
+      body: JSON.stringify(params.ein), // body data type must match "Content-Type" header
     });
 
+
     const address = await response.json();
+
 
     if (address.length !== 0) {
       setClaimedAddress(address[0].address);
@@ -59,7 +64,7 @@ export default function Organization(props: any) {
         ) : (
           <LoginButton setUserAddress={setUserAddress} />
         )}
-        <DonateForm orgData={orgData} address={claimedAddress} />
+        <DonateForm orgData={params.ein} address={claimedAddress} />
 
         <p className="text-3xl">Claimed Org Address: {claimedAddress} </p>
         <p>User Wallet Address: {userAddress}</p>

@@ -7,32 +7,52 @@ export default function Searchbar() {
   const [searchInput, setSearchInput] = useState("");
   const [orgs, setOrgs] = useState([]);
 
-  const searchOrgs = async () => {
-    console.log(process.env.REACT_APP_CHARITY_APP_ID)
-    axios.defaults.headers["content-type"] = "application/json";
+  // const searchOrgs = async () => {
+  //   console.log(process.env.REACT_APP_CHARITY_APP_ID)
+  //   axios.defaults.headers["content-type"] = "application/json";
 
-    const { data } = await axios({
-      method: "get",
-      url: "https://api.data.charitynavigator.org/v2/Organizations",
-        params: {
-          app_id: process.env.CHARITY_APP_ID,
-          app_key: process.env.CHARITY_API_KEY,
-          search: searchInput,
-          searchType: "NAME_ONLY",
-          rated:1,
-          pageSize: 100,
-          sort:"RELEVANCE:DESC",
-          sizeRange: 3,
+  //   const { data } = await axios({
+  //     method: "get",
+  //     url: "https://api.data.charitynavigator.org/v2/Organizations",
+  //       params: {
+  //         app_id: process.env.CHARITY_APP_ID,
+  //         app_key: process.env.CHARITY_API_KEY,
+  //         search: searchInput,
+  //         searchType: "NAME_ONLY",
+  //         rated:1,
+  //         pageSize: 100,
+  //         sort:"RELEVANCE:DESC",
+  //         sizeRange: 3,
+  //       },
+  //     }
+  //   );
+
+  //   if (data.organizations) {
+  //     setOrgs(data.organizations);
+  //   } else {
+  //     setOrgs([]);
+  //   }
+  // };
+
+    const searchOrgs = async () => {
+
+      const response = await axios.post("http://localhost:3001/api/search-orgs", { searchInput }, {
+        headers: {
+          // 'application/json' is the modern content-type for JSON, but some
+          // older servers may use 'text/json'.
+          // See: http://bit.ly/text-json
+          'content-type': 'application/json'
         },
-      }
-    );
+        params: {
+          input: searchInput
+        }});
 
-    if (data.organizations) {
-      setOrgs(data.organizations);
-    } else {
-      setOrgs([]);
-    }
-  };
+      if (response.data.organizations) {
+        setOrgs(response.data.organizations);
+      } else {
+        setOrgs([]);
+      }
+    };
 
   const renderOrgs = () => {
     return orgs.map((org: any) => {
@@ -82,7 +102,7 @@ export default function Searchbar() {
               <button
                 onClick={searchOrgs}
                 className="w-full md:w-auto bg-bright-purple hover:bg-bright-purple/70 mt-4 text-white rounded-full px-[46px] py-[10px]"
-                
+
               >
                 Search
               </button>
