@@ -3,26 +3,27 @@ import {createClient as startClient} from '@urql/core';
 import fetch from 'node-fetch';
 import graphQLtestABI from '../src/abis/graphQLtestABI.json';
 import { ethers } from "ethers";
+import * as dotenv from 'dotenv'
 
 export default async function einHandler(ein) {
-
+  dotenv.config()
   try {
 
-    const supabase = createClient('https://abyockrhlitzeprckgjh.supabase.co', process.env.NEXT_PUBLIC_SUPABASE_KEY);
+    const supabase = createClient('https://abyockrhlitzeprckgjh.supabase.co', process.env.REACT_APP_NEXT_PUBLIC_SUPABASE_KEY);
 
     // This DB call will input the EIN from the API call and either return an Address or empty array
     const einResponse = await supabase
       .from('final_table')
       .select('*')
       .eq('ein', parseInt(ein))
-
+    console.log(einResponse)
     // If there is an EIN/Address match from DB, return the data to FE
     if (einResponse.data.length !== 0) {
       return einResponse.data;
     }
 
     // API URL for The Graph
-    const APIURL = process.env.GRAPH_URL;
+    const APIURL = process.env.REACT_APP_GRAPH_URL;
 
     // 'Current number' is the number of Orgs that have been deployed
     const number = await supabase
@@ -67,7 +68,7 @@ export default async function einHandler(ein) {
 
     // Loop through new Orgs & find their EIN number. Add them to Array
     for (let i=0; i < arrayOfAddress.length; i++) {
-      const provider = new ethers.providers.JsonRpcProvider(process.env.ALCHEMY_URL);
+      const provider = new ethers.providers.JsonRpcProvider(process.env.REACT_APP_ALCHEMY_URL);
 
       const contract = new ethers.Contract(arrayOfAddress[i], graphQLtestABI, provider);
       const response = (await contract.orgId()).toString();

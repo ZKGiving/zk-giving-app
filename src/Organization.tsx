@@ -13,24 +13,19 @@ export default function Organization(props: any) {
   const  params  = useParams();
 
   async function callEIN() {
-    console.log(params)
 
-    const response = await fetch("http://localhost:3001/api/ein-subgraph", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow", // manual, *follow, error
-      referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(params.ein), // body data type must match "Content-Type" header
-    });
+    const response = await axios.post("http://localhost:3001/api/ein-subgraph", { params }, {
+        headers: {
+          // 'application/json' is the modern content-type for JSON, but some
+          // older servers may use 'text/json'.
+          'content-type': 'application/json'
+        },
+        params: {
+          input: params.ein
+        }
+        });
 
-
-    const address = await response.json();
-
+    const address = response.data;
 
     if (address.length !== 0) {
       setClaimedAddress(address[0].address);
