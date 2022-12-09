@@ -6,7 +6,7 @@ import einHandler from "./ein-subgraph.js";
 import * as dotenv from 'dotenv'
 
 const PORT = process.env.PORT || 3001;
-
+dotenv.config()
 const app = express();
 
 app.use(cors({
@@ -20,8 +20,8 @@ app.post('/api/search-orgs', async function(req, res, next){
   res.send(orgs);
 });
 
-app.post('api/ein-subgraph', async function(req, res, next) {
-  console.log(req.body)
+app.post('/api/ein-subgraph', async function(req, res, next) {
+  console.log(req.query)
   const address = await einHandler(req.query.input);
   res.send(address);
 })
